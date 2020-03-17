@@ -21,29 +21,29 @@ def exe? file
  file.match?(/exe|dmg/)
 end
 
-def move_images path, file
+def move_images local_path, file
   if !Dir.exist? "Images"
     begin
       FileUtils.mkdir_p 'Images'
-      FileUtils.mv("#{path}/#{file}", "#{path}/Images")
+      FileUtils.mv("#{local_path}/#{file}", "#{local_path}/Images")
     rescue
       puts 'Something went wrong!'
     end 
   else
     begin
-      FileUtils.mv("#{path}/#{file}", "#{path}/Images")
+      FileUtils.mv("#{local_path}/#{file}", "#{local_path}/Images")
     rescue
       puts 'Something went wrong!'
     end
   end
 end
 
-def move_exe path, file
+def move_exe local_path, file
   if !Dir.exist? "Executable"
     FileUtils.mkdir_p 'Executable'
-    FileUtils.mv("#{path}/#{file}", "#{path}/Executable")
+    FileUtils.mv("#{local_path}/#{file}", "#{local_path}/Executable")
   else
-    FileUtils.mv("#{path}/#{file}", "#{path}/Executable")
+    FileUtils.mv("#{local_path}/#{file}", "#{local_path}/Executable")
   end
 end
 
@@ -51,7 +51,6 @@ if Dir.exist? path(username)
   Dir.chdir path(username)
 
   Dir.each_child(path(username)) { |file|
-    puts 'File', file
     if image? file 
       move_images path(username), file
     elsif exe? file
