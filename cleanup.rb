@@ -9,7 +9,6 @@ def path username
     return "C:/Users/#{username}/Downloads"
   end
 
-  puts 'Ios'
   "/Users/#{username}/Downloads"
 end
 
