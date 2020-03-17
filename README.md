@@ -1,4 +1,4 @@
-# Clean your downloads folder (Mac/Windows)
+# Clean up your downloads folder (Mac/Windows)
 
 ## Before 
 ![](assets/before.png)
