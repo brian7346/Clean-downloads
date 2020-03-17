@@ -5,19 +5,11 @@ username = gets.chomp
 path = "/Users/#{username}/Downloads"
 
 def is_image? str 
-  if str.match?(/png|jpg|svg|jpeg/)
-    return true
-  end
-
-  false
+ str.match?(/png|jpg|svg|jpeg/)
 end
 
 def is_exe? file
-  if file.match(/exe|dmg/)
-    return true
-  else
-
-  false
+ file.match?(/exe|dmg/)
 end
 
 def move_images path, file
