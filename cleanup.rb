@@ -16,8 +16,8 @@ def is_exe? file
   if file.match(/exe|dmg/)
     return true
   else
-    return false
-  end
+
+  false
 end
 
 def move_images path, file
@@ -32,7 +32,7 @@ def move_images path, file
     begin
       FileUtils.mv("#{path}/#{file}", "#{path}/Images")
     rescue
-      puts puts 'Something went wrong!'
+      puts 'Something went wrong!'
     end
   end
 end
