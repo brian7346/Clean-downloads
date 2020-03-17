@@ -1,8 +1,17 @@
 require 'fileutils'
+require 'OS'
 
 puts 'Enter PC username: '
 username = gets.chomp
-path = "/Users/#{username}/Downloads"
+
+def path username
+  if OS.windows?
+    return "C:/Users/#{username}/Downloads"
+  end
+
+  puts 'Ios'
+  "/Users/#{username}/Downloads"
+end
 
 def image? str 
  str.match?(/png|jpg|svg|jpeg/)
@@ -38,13 +47,15 @@ def move_exe path, file
   end
 end
 
-if Dir.exist? path
-  Dir.chdir path
-  Dir.each_child(path) { |file|
+if Dir.exist? path(username)
+  Dir.chdir path(username)
+
+  Dir.each_child(path(username)) { |file|
+    puts 'File', file
     if image? file 
-      move_images path, file
+      move_images path(username), file
     elsif exe? file
-      move_exe path, file
+      move_exe path(username), file
     end
   }
   puts 'Done!'
