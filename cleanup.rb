@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'OS'
 
-puts 'Enter PC username: '
+print 'Enter PC username: '
 username = gets.chomp
 
 def path username
