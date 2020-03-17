@@ -4,11 +4,11 @@ puts 'Enter PC username: '
 username = gets.chomp
 path = "/Users/#{username}/Downloads"
 
-def is_image? str 
+def image? str 
  str.match?(/png|jpg|svg|jpeg/)
 end
 
-def is_exe? file
+def exe? file
  file.match?(/exe|dmg/)
 end
 
@@ -41,9 +41,9 @@ end
 if Dir.exist? path
   Dir.chdir path
   Dir.each_child(path) { |file|
-    if is_image? file 
+    if image? file 
       move_images path, file
-    elsif is_exe? file
+    elsif exe? file
       move_exe path, file
     end
   }
