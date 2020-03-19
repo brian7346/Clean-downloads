@@ -4,10 +4,11 @@ require 'fileutils'
 class DownloadCleaner
   def initialize(user_root)
     @root = user_root
-    paths = {image: File.join(@root, 'Downloads', 'Images'),
+    raise ArgumentError("Path #{@root} does not exist") unless Dir.exist?(@root)
+    @paths = {image: File.join(@root, 'Downloads', 'Images'),
              executable: File.join(@root, 'Downloads', 'Executables')}
     #make sure your paths exists right away, rather than mid file loop
-    paths.each_value do |path|
+    @paths.each_value do |path|
       FileUtils.mkdir_p(path) unless Dir.exist?(path)
     end
   end
@@ -30,24 +31,24 @@ class DownloadCleaner
     Dir.each_child(download_path) { |file| move_file(File.join(download_path, file)) }
   end
 
-  def self.executable?(file)
+  def executable?(file)
     file.match?(/exe|dmg/)
   end
 
-  def self.image?(str)
+  def image?(str)
     str.match?(/png|jpg|svg|jpeg/)
   end
 
   private
 
   def find_dest(file_path)
-    return paths[:image] if self.class.image?(file_path)
-    return paths[:executable] if self.class.executable?(file_path)
+    return @paths[:image] if image?(file_path)
+    return @paths[:executable] if executable?(file_path)
     raise ArgumentError, "Path: #{file_path} is neither an image nor an executable"
   end
 end
 
-# rather than do IO with the user, just expect them to enter the username they want to clean
+# rather than do IO with the user, just expect them to enter the username they want to clean on the command line
 if ARGV.length == 1
   user_path = File.join('/Users', ARGV[0])
   cleaner = DownloadCleaner.new(user_path)
